@@ -89,6 +89,9 @@ GEM
     execjs (2.2.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     geocomplete_rails (1.5.0.1)
       railties (>= 3.1)
     gmaps4rails (2.1.2)
@@ -258,6 +261,7 @@ DEPENDENCIES
   carrierwave (~> 0.10.0)
   coffee-rails (~> 4.0.0)
   devise (~> 3.2.4)
+  figaro
   geocomplete_rails (~> 1.5.0.1)
   gmaps4rails (~> 2.1.2)
   jazz_hands

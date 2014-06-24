@@ -40,6 +40,12 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
+# Support of russian language
+gem 'russian', '~> 0.6.0'
+
+# YouTube videos
+gem 'youtube_it', '~> 2.4.0'
+
 # Development environment
 group :development do
   gem 'bullet'
@@ -51,12 +57,8 @@ group :development do
   gem 'spring'
 end
 
-# Support of russian language
-gem 'russian', '~> 0.6.0'
-
-# YouTube videos
-gem 'youtube_it', '~> 2.4.0'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# Production environment
+group :production do
+  gem 'figaro'  # environment variables for production
+end
 
