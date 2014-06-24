@@ -13,10 +13,11 @@
 </head>
 <body>
 
+<%= render partial: 'partials/google_analytics' %>
 <%= render partial: 'partials/navbar' %>
 
 <div id="map-flash-messages">
-  <%= render partial: "partials/flash_messages", flash: flash %>
+  <%= render partial: 'partials/flash_messages', flash: flash %>
 </div>
   
 <%= yield %>
