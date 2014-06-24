@@ -1,0 +1,37 @@
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a href="/" class="navbar-brand">War<strong>In</strong>Ukraine</a>
+    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li<%= ' class=active' if params[:controller] == 'map' %>>
+          <%= link_to 'Карта', root_path %>
+        </li>
+        <li<%= ' class=active' if params[:controller] == 'news' && params[:action] == 'index' %>>
+          <%= link_to 'Новости', news_index_path %>
+        </li>
+        <li<%= ' class=active' if params[:controller] == 'news' && params[:action] == 'new' %>>
+          <%= link_to 'Предложить новость', new_news_path %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.to_s %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Профиль', profile_path %></li>
+              <li><%= link_to 'Выйти', destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>       
+        <% else %>
+          <li><a href="/thanks">Благодарности</a></li>
+          <li><a href="/wanna-post">Хотите публиковать?</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

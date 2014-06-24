@@ -1,0 +1,1 @@
+$youtube = YouTubeIt::Client.new

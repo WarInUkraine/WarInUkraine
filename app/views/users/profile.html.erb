@@ -1,0 +1,11 @@
+<h1><%= @user.to_s %></h1>
+<p><strong>О себе:</strong> <%= @user.about %></p>
+
+<% unless @user.news.empty? %>
+  <h4>Ваши публикации:</h4>
+  <ul>
+    <% @user.news.each do |news| %>
+      <li><%= link_to news.title, news_path(news) %></li>
+    <% end %>
+  </ul>
+<% end %>

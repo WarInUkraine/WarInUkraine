@@ -1,0 +1,132 @@
+<div class="news-page">
+  <h1 class="news-page-title">
+    <%= '[Видео]' unless @news.youtube_url.empty? %>
+    <%= @news.title %>
+    <small><%= Russian::strftime(@news.happened_at, '%d %B %Y в %H:%M') %></small>
+    <% if user_signed_in? && current_user.admin? %>
+      <small>
+        <%= link_to edit_news_path(@news) do %>
+          <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+      </small>
+    <% end %>
+  </h1>
+  <div class="row">
+    <div class="col-md-7">
+      <% unless @news.text.empty? %>
+        <div class="news-page-text">
+          <%= raw @news.text %>
+        </div>
+      <% end %>
+      <% unless @news.youtube_url.empty? %>
+        <div class="news-page-video">
+          <% unless @news.text.empty? %>
+            <h3 class="news-page-video-label">Видео</h3>
+          <% end %>
+          <h4 class="news-page-video-title"><%= @news.youtube_data.title %></h4>
+          <% if @news.youtube_data.embeddable? %>
+            <div class="news-page-video-embed">
+              <%= raw @news.youtube_data.embed_html_with_width(635) %>
+            </div>
+          <% else %>
+            <p>Ссылка: <%= link_to @news.youtube_url, @news.youtube_url %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-5">
+      <h4><%= @news.location.address %></h4>
+      <div class="news-page-map" id="news-page-map-<%= @news.id %>"></div>
+
+      <script type="text/javascript">
+        handler = Gmaps.build('Google');
+        handler.buildMap({
+          provider: {
+            zoom: 15,
+            center: new google.maps.LatLng(<%= @news.location.lat %>, <%= @news.location.lng %>),
+            mapTypeId: google.maps.MapTypeId.HYBRID
+          },
+          internal: { id: 'news-page-map-<%= @news.id %>' }
+        }, function() {
+          centralMarker = new google.maps.Marker({
+            'map': handler.getMap(),
+            'position': handler.getMap().getCenter(),
+            'animation': google.maps.Animation.DROP,
+            'title': 'Центр события'
+          })
+        });
+      </script>
+    </div>
+  </div>
+  <blockquote class="news-page-author">
+    <h6 class="news-page-author-name">
+      Автор:
+      <% if @news.user %>
+        <%= @news.user.to_s %>
+      <% else %>
+        Анонимно
+      <% end %>
+      <small>опубликовал <%= Russian::strftime(@news.created_at, '%d %B %Y в %H:%M') %></small>
+    </h6>
+    <% if @news.user %>
+      <div class="news-page-author-about"><%= @news.user.about %></div>
+    <% end %>
+  </blockquote>
+</div>
+
+<hr>
+<hr>
+
+<div class="comments-for-news">
+  <h2>Комментарии</h2>
+  <% if @news.comments.empty? %>
+    <div class="alert alert-info">
+      Никто еще не комментировал эту новость, <strong>Ваш комментарий будет первым!</strong>
+    </div>
+  <% else %>
+    <div class="comments-for-news-list">
+      <% i = 0 %>
+      <% @news.comments.each do |comment| %>
+        <blockquote class="comments-for-news-list-item">
+          <h5 class="comments-for-news-list-item-title">
+            #<%= i += 1 %>:
+
+            <% if comment.email.nil? || comment.email.empty? %>
+              <%= comment.author.empty? ? 'Анонимно' : comment.author %>
+            <% else %>
+              <%= link_to comment.author.empty? ? 'Анонимно' : comment.author, "mailto:#{comment.email}" %>
+            <% end %>
+
+            <small><%= Russian::strftime(comment.created_at, '%d %B %Y в %H:%M') %></small>
+          </h5>
+          <div class="comments-for-news-list-item-text">
+            <%= comment.text %>
+          </div>
+        </blockquote>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_for [@news, Comment.new] do |f| %>
+    <h2>Добавить комментарий</h2>
+
+    <div class="form-group">
+      <%= f.label :email, 'Email (опционально)', class: 'control-label' %>
+      <%= f.text_field :email, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :author, 'Автор (опционально)', class: 'control-label' %>
+      <%= f.text_field :author, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :text, 'Текст комментария *', class: 'control-label' %>
+      <%= f.text_area :text, class: 'form-control' %>
+    </div>
+
+    <%= f.submit nil, class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+

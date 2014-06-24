@@ -1,0 +1,1 @@
+<%= raw @hash.to_json %>

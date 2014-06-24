@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @static.url %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @static.title %>
+</p>
+
+<p>
+  <strong>Html:</strong>
+  <%= @static.html %>
+</p>
+
+<%= link_to 'Edit', edit_static_path(@static) %> |
+<%= link_to 'Back', statics_path %>

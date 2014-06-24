@@ -1,0 +1,13 @@
+<div class="marker">
+  <h3 class="marker-title">
+    <%= '[Видео]' unless news.youtube_url.empty? %>
+    <%= news.title %>
+  </h3>
+  <div class="marker-happened-ago text-muted">
+    <small><%= time_ago_in_words(news.happened_at) %> назад</small>
+  </div>
+  <% unless news.description.empty? %>
+    <div class="marker-description"><%= news.description %></div>
+  <% end %>
+  <div class="marker-link"><%= link_to 'Подробнее..', news_path(news), target: '_blank' %></div>
+</div>

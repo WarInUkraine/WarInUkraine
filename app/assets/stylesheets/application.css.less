@@ -1,0 +1,261 @@
+//
+// This is a manifest file that'll be compiled into application.css, which will include all the files
+// listed below.
+//
+// Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+// or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+//
+// You're free to add application-wide styles to this file and they'll appear at the bottom of the
+// compiled file so the styles you add here take precedence over styles defined in any styles
+// defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+// file per style scope.
+//
+//= require redactor-rails
+//= require bootstrap_and_overrides
+//= require bootstrap-slider
+//= require_tree .
+//= require_self
+//
+
+.slider-handle:focus {
+  outline: none;
+} 
+
+.redactor_redactor {
+  color: #200;
+  height: 500px;
+}
+
+body {
+  padding-top: 100px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -90px;
+  padding: 0 0 40px;
+}
+
+.push, footer {
+  height: 90px;
+}
+
+.navbar, #main-map-controls, footer {
+  font-family: 'Open Sans';
+}
+
+.navbar {
+  font-weight: 300;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.page-title {
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.marker {
+  .marker-title {
+    color: #222;
+    padding: 0;
+    margin: 0;
+  }
+
+  .marker-happened-ago {
+    margin: 0 0 5px;
+  }
+
+  .marker-description {
+    color: #222;
+    margin: 0 0 5px;
+  }
+
+  .marker-link {
+    text-align: right;
+  }
+}
+
+#map-flash-messages {
+  width: 960px;
+  margin: 0 auto;
+  z-index: 1000;
+  position: relative; // for display at map
+}
+
+#main-map {
+  min-width: 100%;
+  min-height: 100%;
+  padding-top: 54px;
+  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  #main-map-controls {
+    opacity: .97;
+    color: #888;
+    padding: 10px 10px 10px 0;
+    background: #fff;
+    box-shadow: 0 0 3px #333;
+    border-radius: 2px;
+    position: absolute;
+    // top: 75px;
+    // left: 90px;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    .control {
+      float: left;
+      padding: 0 0 0 10px;
+
+      label {
+        margin: 0;
+        cursor: pointer;
+      }
+
+      .slider {
+        margin: -4px 0 0;
+      }
+    }
+  }
+
+  #main-map-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.news-list {
+  padding: 20px 0 0;
+
+  .news-list-item {
+    margin: 0 0 40px;
+
+    .news-list-item-title {
+      padding: 0;
+      margin: 0 0 5px;
+
+      a {
+        color: #555;
+      }
+
+      small {
+        font-size: 14px;
+        font-style: italic;
+      }
+    }
+
+    .news-list-item-description {
+      margin: 0 0 5px;
+
+      * {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    .news-list-item-link {
+      font-size: 16px;
+    }
+
+    .news-list-item-map {
+      height: 150px;
+    }
+  }
+}
+
+.news-page {
+  margin: 0 0 20px;
+
+  .news-page-title {
+    padding: 0;
+    margin: 0 0 20px;
+  }
+
+  .news-page-text {
+    color: #333;
+    font-size: 16px;
+    margin: 0 0 20px;
+
+    * {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    img {
+      box-shadow: 0 0 3px #ccc;
+    }
+  }
+
+  .news-page-video {
+    margin: 0 0 20px;
+
+    .news-page-video-label {
+      padding: 0;
+      margin: 0 0 5px;
+    }
+
+    .news-page-video-title {}
+    
+    .news-page-video-embed {}
+  }
+
+  .news-page-map {
+    height: 400px;
+  }
+
+  .news-page-author {
+    .news-page-author-name {
+      font-size: 15px;
+      padding: 0;
+      margin: 0 0 5px;
+    }
+
+    .news-page-author-about {
+      font-size: 16px;
+    }
+  }
+}
+
+.comments-for-news {
+  .comments-for-news-list {
+    .comments-for-news-list-item {
+      .comments-for-news-list-item-title {
+        font-weight: 900;
+        padding: 0;
+        margin: 0 0 5px;
+      }
+
+      .comments-for-news-list-item-text {
+        * {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.static-page {
+  .static-page-title {}
+  .static-page-html {
+    font-size: 16px;
+  }
+}
+
+footer {
+  background: #fafafa;
+  padding: 20px 0;
+}
