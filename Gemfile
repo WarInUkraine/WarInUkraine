@@ -10,8 +10,8 @@ gem 'pg'
 gem 'devise', '~> 3.2.4'
 
 # Use LESS for stylesheets and Bootstrap 3
-gem "therubyracer"
-gem "less-rails"
+gem 'therubyracer'
+gem 'less-rails'
 gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 
 # Google Maps
