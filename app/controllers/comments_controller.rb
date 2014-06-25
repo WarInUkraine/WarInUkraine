@@ -48,6 +48,8 @@ class CommentsController < ApplicationController
                end
 
     @comment.published!
+    @comment.author_ip = request.remote_ip
+    @comment.author_location = "#{request.location.city}, #{request.location.country_code}"
 
     respond_to do |format|
       if @comment.save

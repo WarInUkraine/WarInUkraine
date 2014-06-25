@@ -1,0 +1,6 @@
+SECRET_KEY_BASE: random_string
+WARINUKRAINE_DATABASE_PASSWORD: password    # only for production mode
+DEVISE_SECRET_KEY: random_string
+DEVISE_PEPPER: random_string
+GOOGLE_ANALYTICS_CODE: code                 # comment for disable
+GOOGLE_ANALYTICS_DOMAIN: domain.com

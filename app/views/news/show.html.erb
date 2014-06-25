@@ -102,9 +102,15 @@
           <div class="comments-for-news-list-item-text">
             <%= comment.text %>
           </div>
+          <div class="comments-for-news-list-item-location">
+            <%= comment.author_location %>
+          </div>
         </blockquote>
       <% end %>
     </div>
+
+    <hr>
+    <hr>
   <% end %>
 
   <%= form_for [@news, Comment.new] do |f| %>

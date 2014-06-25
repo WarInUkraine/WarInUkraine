@@ -46,6 +46,12 @@ gem 'russian', '~> 0.6.0'
 # YouTube videos
 gem 'youtube_it', '~> 2.4.0'
 
+# Geocoding
+gem 'geocoder', '~> 1.2.2'
+
+# Environment variables
+gem 'figaro', '~> 0.7.0'
+
 # Development environment
 group :development do
   gem 'bullet'
@@ -56,9 +62,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
-# Production environment
-group :production do
-  gem 'figaro'  # environment variables for production
-end
-
