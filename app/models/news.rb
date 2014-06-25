@@ -13,7 +13,7 @@ class News < ActiveRecord::Base
   validates :description, presence: true, length: { maximum: 255 }
   validates :text, presence: true, if: 'youtube_url.empty?'
   validates :location, presence: true
-  validate  :validate_youtube_url, unless: 'youtube_url.empty?'
+  validate  :validate_youtube_url, if: '!youtube_url.empty? && youtube_url_changed?'
 
   # Enumerable
   enum status: {

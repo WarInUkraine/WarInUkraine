@@ -1,0 +1,112 @@
+<%= form_for @news, url: @news.new_record? ? admin_news_index_path : admin_news_path(@news) do |f| %>
+  <% if @news.errors.any? %>
+    <div class="alert alert-danger">
+      <p>
+        <strong>
+          <%= "#{@news.errors.count} #{Russian.pluralize(@news.errors.count, 'ошибка', 'ошибки', 'ошибок')}:" %>
+        </strong>
+      </p>
+      <ul>
+        <% @news.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:user].empty? %>">
+    <%= f.label :user_id, 'Автор', class: 'control-label' %>
+    <%= f.select :user_id, options_for_select(User.all.collect { |u| [u.to_s, u.id] }, selected: @news.user_id), { include_blank: 'None' } %>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:status].empty? %>">
+    <%= f.label :status, 'Статус', class: 'control-label' %>
+    <%= f.select :status, options_for_select(News.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @news.status) %>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:title].empty? %>">
+    <%= f.label :title, 'Название *', class: 'control-label' %>
+    <%= f.text_field :title, class: 'form-control' %>
+    <div class="help-block">
+      <ul>
+        <li>ограничение в 128 символов</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:description].empty? %>">
+    <%= f.label :description, 'Описание (короткое) *', class: 'control-label' %>
+    <%= f.text_field :description, class: 'form-control' %>
+    <div class="help-block">
+      <ul>
+        <li>ограничение в 255 символов</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:happened_at].empty? %>">
+    <%= f.label :happened_at, 'Время новости (когда произошло) *', class: 'control-label' %><br>
+    <%= f.datetime_select :happened_at, minute_step: 10 %>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:text].empty? %>">
+    <%= f.label :text, 'Текст новости (необязательно если указано видео)', class: 'control-label' %>
+    <%= f.text_area :text, class: 'redactor' %>
+  </div>
+
+  <div class="form-group<%= ' has-error' unless @news.errors[:youtube_url].empty? %>">
+    <%= f.label :youtube_url, 'Видео (ссылка на YouTube)', class: 'control-label' %>
+    <%= f.text_field :youtube_url, class: 'form-control' %>
+  </div>
+
+  <%= f.fields_for :location do |l| %>
+    <div class="form-group<%= ' has-error' unless @news.errors['location.lat'].empty? || @news.errors['location.lng'].empty? %>">
+      <%= l.label :address, 'Адресс *', class: 'control-label' %>
+      <%= l.text_field :address, class: 'form-control' %>
+    </div>
+
+    <%= l.hidden_field :lat, id: 'news-lat' %>
+    <%= l.hidden_field :lng, id: 'news-lng' %>
+
+    <div class="form-group">
+      <div id="news-map" style="height: 300px;"></div>
+    </div>
+
+    <script type="text/javascript">
+      handler = Gmaps.build('Google');
+      handler.buildMap({
+        provider: {
+          zoom: 8,
+          center: new google.maps.LatLng(<%= @news.location.lat || Location::DONETSK_LAT %>, <%= @news.location.lng || Location::DONETSK_LNG %>),
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        },
+        internal: { id: 'news-map' }
+      }, function() {
+        centralMarker = new google.maps.Marker({
+          'map': handler.getMap(),
+          'position': handler.getMap().getCenter(),
+          'animation': google.maps.Animation.DROP,
+          'title': 'Центр события'
+        })
+
+        google.maps.event.addListener(handler.getMap(), 'center_changed', function() {
+          centralMarker.setPosition(new google.maps.LatLng(handler.getMap().getCenter().lat(), handler.getMap().getCenter().lng()))
+
+          $('#news-lat').val(handler.getMap().getCenter().lat());
+          $('#news-lng').val(handler.getMap().getCenter().lng());
+        });
+      });
+
+      $('#news_location_attributes_address').geocomplete()
+          .bind('geocode:result', function(event, result) {
+            console.log(result);
+            handler.getMap().setCenter(result.geometry.location);
+          })
+          .bind('geocode:error', function(error) {
+            console.log(error);
+          });
+    </script>
+  <% end %>
+
+  <%= f.submit nil, class: 'btn btn-primary' %>
+<% end %>

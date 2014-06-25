@@ -1,0 +1,57 @@
+<%= form_for @user, url: @user.new_record? ? admin_users_path : admin_user_path(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <p>
+        <strong>
+          <%= "#{@user.errors.count} #{Russian.pluralize(@user.errors.count, 'ошибка', 'ошибки', 'ошибок')}:" %>
+        </strong>
+      </p>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :email, class: 'control-label' %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, 'Пароль', class: 'control-label' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, 'Подтвердите пароль', class: 'control-label' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :admin, class: 'checkbox' do %>
+      <%= f.check_box :admin %>
+      Администратор
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :first_name, class: 'control-label' %>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name, class: 'control-label' %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :about, class: 'control-label' %>
+    <%= f.text_area :about, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit nil, class: 'btn btn-primary' %>
+  </div>
+<% end %>

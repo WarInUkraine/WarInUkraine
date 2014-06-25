@@ -1,0 +1,49 @@
+<h1>Список комментариев</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Комментарий к</th>
+      <th>Email</th>
+      <th>Автор</th>
+      <th>Текст</th>
+      <th>Статус</th>
+      <th>Опубликовано</th>
+      <th width="140px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= link_to comment.commentable.to_s, comment.commentable %></td>
+        <td><%= comment.email %></td>
+        <td><%= comment.author %></td>
+        <td><%= comment.text %></td>
+        <td>
+          <% if comment.draft? %>
+            <div class="label label-default">Черновик</div>
+          <% elsif comment.published? %>
+            <div class="label label-success">Опубликовано</div>
+          <% elsif comment.removed? %>
+            <div class="label label-danger">Удалено</div>
+          <% end %>
+        </td>
+        <td><%= Russian::strftime(comment.created_at, '%d %B %Y в %H:%M') %></td>
+        <td>
+          <%= link_to comment.commentable do %>
+            <i class="fa fa-eye fa-fw"></i>Просмотр
+          <% end %><br>
+
+          <%= link_to edit_admin_comment_path(comment) do %>
+            <i class="fa fa-pencil fa-fw"></i>Изменить
+          <% end %><br>
+
+          <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'text-danger' do %>
+            <i class="fa fa-times fa-fw"></i>Удалить
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

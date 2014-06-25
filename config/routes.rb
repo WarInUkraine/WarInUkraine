@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   }
 
   # Resources
-  resources :comments
   resources :statics
+  resources :comments, only: [:create]
 
   resources :news do
     resources :comments
@@ -22,6 +22,13 @@ Rails.application.routes.draw do
   # API
   namespace :api, defaults: { format: :json } do
     get 'markers', to: 'markers#show'
+  end
+
+  # Admin
+  namespace :admin do
+    resources :news, except: [:show]
+    resources :users, except: [:show]
+    resources :comments, except: [:new, :create, :show]
   end
 
   get 'profile', to: 'users#profile'

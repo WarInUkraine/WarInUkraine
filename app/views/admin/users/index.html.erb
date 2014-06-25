@@ -1,0 +1,43 @@
+<h1>Список пользователй</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th width="65px"></th>
+      <th>Email</th>
+      <th>Имя</th>
+      <th>Новостей</th>
+      <th width="160px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <% if user.admin? %>
+            <span class="label label-success">Админ</span>
+          <% end %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+        <td><%= "#{user.first_name} #{user.last_name}" %></td>
+        <td><%= user.news.count %></td>
+        <td>
+          <%= link_to edit_admin_user_path(user) do %>
+            <i class="fa fa-pencil fa-fw"></i>Изменить
+          <% end %><br>
+
+          <%= link_to admin_user_path(user), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'text-danger' do %>
+            <i class="fa fa-times fa-fw"></i>Удалить
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Новый пользователь', new_admin_user_path, class: 'btn btn-success' %>

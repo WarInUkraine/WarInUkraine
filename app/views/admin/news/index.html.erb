@@ -1,0 +1,57 @@
+<h1>Список новостей</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th width="140px">Автор</th>
+      <th>Название</th>
+      <th>Статус</th>
+      <th>Произошло</th>
+      <th>Опубликовано</th>
+      <th width="140px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @news.each do |news| %>
+      <tr>
+        <td>
+          <% if news.user %>
+            <%= news.user.to_s %>
+          <% else %>
+            <div class="text-muted">Анонимно</div>
+          <% end %>
+        </td>
+        <td><%= news.title %></td>
+        <td>
+          <% if news.draft? %>
+            <div class="label label-default">Черновик</div>
+          <% elsif news.published? %>
+            <div class="label label-success">Опубликовано</div>
+          <% elsif news.removed? %>
+            <div class="label label-danger">Удалено</div>
+          <% end %>
+        </td>
+        <td><%= Russian::strftime(news.happened_at, '%d %B %Y в %H:%M') %></td>
+        <td><%= Russian::strftime(news.created_at, '%d %B %Y в %H:%M') %></td>
+        <td>
+          <%= link_to news do %>
+            <i class="fa fa-eye fa-fw"></i>Просмотр
+          <% end %><br>
+
+          <%= link_to edit_admin_news_path(news) do %>
+            <i class="fa fa-pencil fa-fw"></i>Изменить
+          <% end %><br>
+
+          <%= link_to admin_news_path(news), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'text-danger' do %>
+            <i class="fa fa-times fa-fw"></i>Удалить
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Новая Новость', new_admin_news_path, class: 'btn btn-success' %>

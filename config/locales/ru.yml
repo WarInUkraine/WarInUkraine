@@ -1,6 +1,9 @@
 ru:
   activerecord:
     models:
+      user:
+        one: 'Аккаунт'
+        other: 'Аккаунты'
       news: 
         one: 'Новость'
         other: 'Новости'
@@ -11,6 +14,9 @@ ru:
         one: 'Локация'
         other: 'Локации'
     attributes:
+      user:
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
       news:
         user: 'Автор'
         title: 'Название'

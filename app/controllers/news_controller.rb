@@ -7,13 +7,7 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    if user_signed_in? && current_user.admin?
-      @news = News.unscoped
-    else
-      @news = News
-    end
-
-    @news = @news.paginate(page: params[:page]).order(created_at: :desc)
+    @news = News.paginate(page: params[:page]).order(created_at: :desc)
   end
 
   # GET /news/1
@@ -64,7 +58,6 @@ class NewsController < ApplicationController
   # PATCH/PUT /news/1.json
   def update
     @news.update(news_params)
-    @news.user_id ||= current_user.id unless current_user.admin?
 
     respond_to do |format|
       if @news.save
@@ -80,7 +73,12 @@ class NewsController < ApplicationController
   # DELETE /news/1
   # DELETE /news/1.json
   def destroy
-    @news.destroy
+    if @news.removed?
+      @news.destroy
+    else
+      @news.removed!
+    end
+
     respond_to do |format|
       format.html { redirect_to news_index_url, notice: 'Новость успешно удалена!' }
       format.json { head :no_content }

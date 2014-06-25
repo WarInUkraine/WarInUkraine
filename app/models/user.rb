@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   # Associations
   has_many :news, dependent: :destroy
 
+  # Validation
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   # Filters
   before_save :capitalize_name
 
