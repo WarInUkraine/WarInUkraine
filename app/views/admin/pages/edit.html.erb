@@ -1,0 +1,6 @@
+<h1>Редактирование страницы</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Просмотр', "/#{@page.url}", class: 'btn btn-warning' %>
+<%= link_to 'К списку страниц', admin_pages_path, class: 'btn btn-default' %>

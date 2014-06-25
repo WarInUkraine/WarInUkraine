@@ -1,0 +1,37 @@
+<h1>Список страниц</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Адресс</th>
+      <th width="160px"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= page.title %></td>
+        <td><%= page.url %></td>
+        <td>
+          <%= link_to "/#{page.url}", target: '_blank' do %>
+            <i class="fa fa-eye fa-fw"></i>Просмотр
+          <% end %><br>
+
+          <%= link_to edit_admin_page_path(page) do %>
+            <i class="fa fa-pencil fa-fw"></i>Изменить
+          <% end %><br>
+
+          <%= link_to admin_page_path(page), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'text-danger' do %>
+            <i class="fa fa-times fa-fw"></i>Удалить
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Новая страница', new_admin_page_path, class: 'btn btn-success' %>

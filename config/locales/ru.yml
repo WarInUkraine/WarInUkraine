@@ -13,6 +13,9 @@ ru:
       location:
         one: 'Локация'
         other: 'Локации'
+      static:
+        one: 'Страницу'
+        other: 'Страницы'
     attributes:
       user:
         first_name: 'Имя'
@@ -33,6 +36,10 @@ ru:
       location:
         lat: 'Широта'
         lng: 'Долгота'
+      static:
+        url: 'URL'
+        title: 'Название'
+        html: 'Содержание'
   will_paginate:
     next_label: "Следующая →"
     page_entries_info:
