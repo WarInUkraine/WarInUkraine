@@ -58,6 +58,17 @@
       </script>
     </div>
   </div>
+  <div class="news-page-share-buttons">
+    <div class="button vk">
+      <script type="text/javascript">
+        document.write(VK.Share.button({
+          title: '<%= @news.title %>',
+          description: '<%= @news.description %>',
+          image: 'http://warinukraine.info/images/WarInUkraine2880x1800.png'
+        }));
+      </script>
+    </div>
+  </div>
   <blockquote class="news-page-author">
     <h6 class="news-page-author-name">
       Автор:

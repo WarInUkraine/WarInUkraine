@@ -7,28 +7,35 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
+    @page_title = 'Новости'
     @news = News.paginate(page: params[:page]).order(created_at: :desc)
   end
 
   # GET /news/1
   # GET /news/1.json
   def show
+    @page_title = @news.title
+    @page_description = @news.description
   end
 
   # GET /news/new
   def new
+    @page_title = 'Создание новости'
+
     @news = News.new
     @news.build_location
   end
 
   # GET /news/1/edit
   def edit
+    @page_title = @news.title
     @news.build_location unless @news.location
   end
 
   # POST /news
   # POST /news.json
   def create
+    @page_title = 'Создание новости'
     @news = News.new(news_params)
     
     if user_signed_in?
@@ -57,6 +64,7 @@ class NewsController < ApplicationController
   # PATCH/PUT /news/1
   # PATCH/PUT /news/1.json
   def update
+    @page_title = @news.title
     @news.update(news_params)
 
     respond_to do |format|
@@ -86,14 +94,12 @@ class NewsController < ApplicationController
   end
 
   private
-    # Check access to editing or removing news
     def check_access
       if !current_user.admin? && !current_user.author?(@news)
         redirect_to news_path, notice: 'Недостаточно прав для просмотра этой страницы'
       end
     end
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_news
       if user_signed_in? && current_user.admin?
         @news = News.unscoped.find(params[:id])
@@ -102,7 +108,6 @@ class NewsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def news_params
       if user_signed_in? && current_user.admin?
         params.require(:news).permit(:user_id, :title, :description, :text, :status, :text, :youtube_url, :happened_at, location_attributes: [:address, :lat, :lng])
