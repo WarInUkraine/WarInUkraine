@@ -6,10 +6,11 @@ WarInUkraine
 =========
 1. [Установить RVM](https://rvm.io/rvm/install) и [Ruby 2.1](https://rvm.io/rubies/installing)
 2. Создать пользователя "warinukraine" и базу данных "warinukraine_development" для PostgreSQL
-3. Выполнить "bundle install"
-4. Выполнить "rake db:migrate && rake db:seed"
-5. Выполнить "rails s"
-6. Готово! Рабочий сайт у вас будет по адресу: [http://localhost:3000/](http://localhost:3000/)
+3. Переименновать "config/application.example.yml" в "config/application.yml" и настроить
+4. Выполнить "bundle install"
+5. Выполнить "rake db:migrate && rake db:seed"
+6. Выполнить "rails s"
+7. Готово! Рабочий сайт у вас будет по адресу: [http://localhost:3000/](http://localhost:3000/)
 
 
 Планы на будущее

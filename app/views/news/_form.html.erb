@@ -99,6 +99,8 @@
   <% end %>
 
   <% if user_signed_in? && current_user.admin? %>
+    <hr>
+
     <div class="form-group<%= ' has-error' unless @news.errors[:user].empty? %>">
       <%= f.label :user_id, 'Автор', class: 'control-label' %>
       <%= f.select :user_id, options_for_select(User.all.collect { |u| [u.to_s, u.id] }, selected: @news.user_id), { include_blank: 'None' } %>
@@ -108,6 +110,8 @@
       <%= f.label :status, 'Статус', class: 'control-label' %>
       <%= f.select :status, options_for_select(News.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @news.status) %>
     </div>
+
+    <hr>
   <% end %>
 
   <%= f.submit nil, class: 'btn btn-primary' %>

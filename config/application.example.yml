@@ -1,6 +1,17 @@
+# Application
 SECRET_KEY_BASE: random_string
 WARINUKRAINE_DATABASE_PASSWORD: password    # only for production mode
+
+# Devise
 DEVISE_SECRET_KEY: random_string
 DEVISE_PEPPER: random_string
+
+# Google Analytics
 GOOGLE_ANALYTICS_CODE: code                 # comment line for disable
 GOOGLE_ANALYTICS_DOMAIN: domain.com
+
+# Amazon S3
+AWS_SECRET_KEY_ID: key_id
+AWS_SECRET_ACCESS_KEY: access_key
+AWS_REGION: us-west-2
+AWS_ENDPOINT: ***.s3-website-us-west-2.amazonaws.com
