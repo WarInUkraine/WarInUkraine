@@ -1,4 +1,4 @@
-<h1><%= @user.to_s %></h1>
+<h1><%= @user.to_s %> <small><%= link_to 'редактировать профиль', profile_edit_path %></small></h1>
 <p><strong>О себе:</strong> <%= @user.about %></p>
 
 <% unless @user.news.empty? %>

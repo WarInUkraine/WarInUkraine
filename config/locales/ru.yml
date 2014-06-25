@@ -15,6 +15,9 @@ ru:
         other: 'Локации'
     attributes:
       user:
+        first_name: 'Имя'
+        last_name: 'Фамилия'
+        about: 'О себе'
         password: 'Пароль'
         password_confirmation: 'Подтверждение пароля'
       news:

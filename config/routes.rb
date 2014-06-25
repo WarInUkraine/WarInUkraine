@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   end
 
   get 'profile', to: 'users#profile'
+  get 'profile/edit', to: 'users#edit'
+  patch 'profile/update', to: 'users#update'
 
   match '/:url', url: /.*/, constraints: { url: /((?!assets)\w.+)+/ }, to: 'statics#display', via: :get
 end
