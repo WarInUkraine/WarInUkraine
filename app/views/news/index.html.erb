@@ -1,54 +1,84 @@
 <div class="row">
   <div class="col-md-8">
-    <h1 class="page-title">Новости боевых действий в Украине</h1>
+    <h1 class="page-title">
+      Новости боевых действий в Украине
+      <% if @date %>
+        <small>
+          за
+          <%= Russian::strftime(@date, '%d %B %Y') %>
+        </small>
+      <% end %>
+    </h1>
   </div>
-  <div class="col-md4 text-right">
+  <div class="col-md-4 text-right">
+    <% if @date %>
+      <div id="turnoff-datepicker" class="btn btn-danger" title="Убрать фильтр по дате"><div class="fa fa-times"></div></div>
+    <% end %>
+    <div id="toggle-datepicker" class="btn btn-warning">По дате</div>
     <%= link_to 'Предложить новость', new_news_path, class: 'btn btn-success' %>
   </div>
 </div>
 
 <div class="news-list">
-  <% @news.each do |news| %>
-    <div class="news-list-item">
-      <div class="row">
-        <div class="col-md-9">
-          <h2 class="news-list-item-title">
-            <%= link_to news.title, news_path(news) %>
-            <small><%= Russian::strftime(news.happened_at, '%d %B %Y в %H:%M') %></small>
-          </h2>
-          <div class="news-list-item-description">
-            <%= news.description %>
-          </div>
-          <div class="news-list-item-link">
-            <%= link_to 'Читать полную новость', news_path(news) %>
-          </div>
-        </div>
-        <div class="col-md3">
-          <div class="news-list-item-map" id="news-list-item-map-<%= news.id %>"></div>
-          <script type="text/javascript">
-            handlerMap<%= news.id %> = Gmaps.build('Google');
-            handlerMap<%= news.id %>.buildMap({
-              provider: {
-                zoom: 13,
-                center: new google.maps.LatLng(<%= news.location.lat %>, <%= news.location.lng %>),
-                mapTypeId: google.maps.MapTypeId.TERRAIN
-              },
-              internal: { id: 'news-list-item-map-<%= news.id %>' }
-            }, function() {
-              centralMarker = new google.maps.Marker({
-                'map': handlerMap<%= news.id %>.getMap(),
-                'position': handlerMap<%= news.id %>.getMap().getCenter(),
-                'animation': google.maps.Animation.DROP,
-                'title': 'Центр события'
-              })
-            });
-          </script>
-        </div>
+  <div class="news-datepicker-block">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-9">
+        <%= javascript_include_tag 'news-datepicker' %>
+        <div id="datepicker"></div>
       </div>
     </div>
-  <% end %>
-
-  <div class="news-list-pagination">
-    <%= will_paginate @news, renderer: BootstrapPagination::Rails %>
   </div>
+
+  <% if @news.empty? %>
+    <div class="alert alert-warning">
+      <p><strong>Не найдено ни одной новости :(</strong></p>
+      <p>Попробуйте заглянуть позже, мы обязтельно что-то добавим к этому времени.</p>
+    </div>
+  <% else %>
+    <% @news.each do |news| %>
+      <div class="news-list-item">
+        <div class="row">
+          <div class="col-md-9">
+            <h2 class="news-list-item-title">
+              <%= link_to news.title, news_path(news) %>
+            </h2>
+            <div class="news-list-item-info">
+              <%= news.location.address %> - <%= Russian::strftime(news.happened_at, '%d %B %Y в %H:%M') %>
+            </div>
+            <div class="news-list-item-description">
+              <%= news.description %>
+            </div>
+            <div class="news-list-item-link">
+              <%= link_to 'Читать полную новость', news_path(news) %>
+            </div>
+          </div>
+          <div class="col-md3">
+            <div class="news-list-item-map" id="news-list-item-map-<%= news.id %>"></div>
+            <script type="text/javascript">
+              handlerMap<%= news.id %> = Gmaps.build('Google');
+              handlerMap<%= news.id %>.buildMap({
+                provider: {
+                  zoom: 13,
+                  center: new google.maps.LatLng(<%= news.location.lat %>, <%= news.location.lng %>),
+                  mapTypeId: google.maps.MapTypeId.TERRAIN
+                },
+                internal: { id: 'news-list-item-map-<%= news.id %>' }
+              }, function() {
+                centralMarker = new google.maps.Marker({
+                  'map': handlerMap<%= news.id %>.getMap(),
+                  'position': handlerMap<%= news.id %>.getMap().getCenter(),
+                  'animation': google.maps.Animation.DROP,
+                  'title': 'Центр события'
+                })
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="news-list-pagination">
+      <%= will_paginate @news, renderer: BootstrapPagination::Rails %>
+    </div>
+  <% end %>
 </div>

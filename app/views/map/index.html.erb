@@ -2,17 +2,28 @@
 
 <div id="main-map">
   <div id="main-map-controls">
-    <div class="clearfix">
-      <div class="control">
-        <i class="fa fa-clock-o"></i>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="main-map-controls-datepicker">
+          <label class="checkbox" for="all-time"><input type="checkbox" id="all-time" name="all-time"> за всё время</label>
+          <div id="datepicker"></div>
+        </div>
       </div>
-      <div class="control">
-        <input type="text" data-slider-min="1" data-slider-max="48" data-slider-step="1" data-slider-value="24" id="map-time-range" value="24"> 
-      </div>
-      <div class="control">
-        <label class="checkbox" for="all-time"><input type="checkbox" id="all-time" name="all-time"> за всё время</label>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="control">
+          <i class="fa fa-clock-o"></i>
+        </div>
+        <div class="control">
+          <input type="text" data-slider-min="1" data-slider-max="96" data-slider-step="1" data-slider-value="48" id="map-time-range" value="48">
+        </div>
+        <div class="control">
+          <label class="checkbox" for="datepicker-time"><input type="checkbox" id="datepicker-time" name="datepicker-time"> фильтр по дате</label>
+        </div>
       </div>
     </div>
   </div>
+
   <div id="main-map-area"></div>
 </div>

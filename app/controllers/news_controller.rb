@@ -8,7 +8,14 @@ class NewsController < ApplicationController
   # GET /news.json
   def index
     @page_title = 'Новости'
-    @news = News.paginate(page: params[:page]).order(created_at: :desc)
+    @news = News
+
+    if params[:date]
+      @date = Date.parse(params[:date]) rescue nil
+      @news = @news.where('happened_at BETWEEN ? AND ?', @date.beginning_of_day, @date.end_of_day) if @date
+    end
+
+    @news = @news.paginate(page: params[:page], per_page: 10).order(created_at: :desc)
   end
 
   # GET /news/1

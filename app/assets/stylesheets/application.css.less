@@ -46,7 +46,7 @@ html, body {
   height: 90px;
 }
 
-.navbar, #main-map-controls, footer {
+.navbar, #main-map, footer {
   font-family: 'Open Sans';
 }
 
@@ -61,6 +61,10 @@ html, body {
 .page-title {
   padding: 0;
   margin: 0 0 20px;
+
+  small {
+    white-space: nowrap;
+  }
 }
 
 .marker {
@@ -95,7 +99,6 @@ html, body {
   min-width: 100%;
   min-height: 100%;
   padding-top: 54px;
-  position: relative;
   position: absolute;
   top: 0;
   left: 0;
@@ -109,8 +112,6 @@ html, body {
     box-shadow: 0 0 3px #333;
     border-radius: 2px;
     position: absolute;
-    // top: 75px;
-    // left: 90px;
     bottom: 20px;
     right: 20px;
     z-index: 1000;
@@ -128,6 +129,34 @@ html, body {
         margin: -4px 0 0;
       }
     }
+
+    #main-map-controls-datepicker {
+      display: none;
+      padding: 0 0 10px 10px;
+
+      .checkbox {
+        margin: 0 0 7px;
+      }
+
+      #datepicker {
+        width: 200px;
+
+        .ui-datepicker-title {
+          font-weight: 600;
+        }
+
+        .ui-datepicker-calendar {
+          thead th {
+            font-weight: 300;
+          }
+
+          .ui-state-active {
+            color: #ff4136;
+            font-weight: 600;
+          }
+        }
+      }
+    }
   }
 
   #main-map-area {
@@ -140,12 +169,22 @@ html, body {
 .news-list {
   padding: 20px 0 0;
 
+  .news-datepicker-block {
+    margin: 0 0 20px;
+
+    #toggle-datepicker {}
+
+    #datepicker {
+      display: none;
+    }
+  }
+
   .news-list-item {
     margin: 0 0 40px;
 
     .news-list-item-title {
       padding: 0;
-      margin: 0 0 5px;
+      margin: 0;
 
       a {
         color: #555;
@@ -154,7 +193,15 @@ html, body {
       small {
         font-size: 14px;
         font-style: italic;
+        white-space: nowrap;
       }
+    }
+
+    .news-list-item-info {
+      color: #999;
+      font-size: 14px;
+      font-style: italic;
+      margin: 0 0 5px;
     }
 
     .news-list-item-description {
@@ -305,8 +352,39 @@ footer {
   }
 }
 
+// fix VK button
 footer .vkshare, .news-page-share-buttons .vk {
   a, #vkshare_cnt0, #vkshare_cnt1 {
     height: auto !important;
+  }
+}
+
+// styles for jquery ui datepicker
+.ui-datepicker {
+  .ui-datepicker-header {
+    a {
+      cursor: pointer;
+    }
+
+    .ui-datepicker-prev {
+
+    }
+
+    .ui-datepicker-next {
+      float: right;
+    }
+
+    .ui-datepicker-title {
+      font-size: 16px;
+      font-weight: 900;
+    }
+  }
+
+  .ui-datepicker-calendar {
+    width: 100%;
+
+    .ui-datepicker-today a {
+      color: #ff851b;
+    }
   }
 }

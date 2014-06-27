@@ -4,7 +4,10 @@ class API::MarkersController < API::APIController
 
     news = News
 
-    if params[:after]
+    if params[:date]
+      date = Date.parse(params[:date]) rescue nil
+      news = news.where('happened_at BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day) if date
+    elsif params[:after]
       news = news.where('happened_at > ?', Time.now - params[:after].to_i.hours)
     end
 
