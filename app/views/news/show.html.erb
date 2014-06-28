@@ -88,62 +88,76 @@
 <hr>
 <hr>
 
-<div class="comments-for-news">
-  <h2>Комментарии</h2>
-  <% if @news.comments.empty? %>
-    <div class="alert alert-info">
-      Никто еще не комментировал эту новость, <strong>Ваш комментарий будет первым!</strong>
-    </div>
-  <% else %>
-    <div class="comments-for-news-list">
-      <% i = 0 %>
-      <% @news.comments.each do |comment| %>
-        <blockquote class="comments-for-news-list-item">
-          <h5 class="comments-for-news-list-item-title">
-            #<%= i += 1 %>:
+<h2>Комментарии</h2>
+<div class="row">
+  <div class="col-xs-6 col-md-6">
+    <div class="comments-for-news">
+      <% if @news.comments.empty? %>
+        <div class="alert alert-info">
+          Никто еще не комментировал эту новость, <strong>Ваш комментарий будет первым!</strong>
+        </div>
+      <% else %>
+        <div class="comments-for-news-list">
+          <% i = 0 %>
+          <% @news.comments.each do |comment| %>
+            <blockquote class="comments-for-news-list-item">
+              <h5 class="comments-for-news-list-item-title">
+                #<%= i += 1 %>:
 
-            <% if comment.email.nil? || comment.email.empty? %>
-              <%= comment.author.empty? ? 'Анонимно' : comment.author %>
-            <% else %>
-              <%= link_to comment.author.empty? ? 'Анонимно' : comment.author, "mailto:#{comment.email}" %>
-            <% end %>
+                <% if comment.email.nil? || comment.email.empty? %>
+                  <%= comment.author.empty? ? 'Анонимно' : comment.author %>
+                <% else %>
+                  <%= link_to comment.author.empty? ? 'Анонимно' : comment.author, "mailto:#{comment.email}" %>
+                <% end %>
 
-            <small><%= Russian::strftime(comment.created_at, '%d %B %Y в %H:%M') %></small>
-          </h5>
-          <div class="comments-for-news-list-item-text">
-            <%= comment.text %>
-          </div>
-          <div class="comments-for-news-list-item-location">
-            <%= comment.author_location %>
-          </div>
-        </blockquote>
+                <small><%= Russian::strftime(comment.created_at, '%d %B %Y в %H:%M') %></small>
+              </h5>
+              <div class="comments-for-news-list-item-text">
+                <%= comment.text %>
+              </div>
+              <div class="comments-for-news-list-item-location">
+                <%= comment.author_location %>
+              </div>
+            </blockquote>
+          <% end %>
+        </div>
+
+        <hr>
+        <hr>
+      <% end %>
+
+      <%= form_for [@news, Comment.new] do |f| %>
+        <h2>Добавить комментарий</h2>
+
+        <div class="form-group">
+          <%= f.label :email, 'Email (опционально)', class: 'control-label' %>
+          <%= f.text_field :email, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :author, 'Автор (опционально)', class: 'control-label' %>
+          <%= f.text_field :author, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :text, 'Текст комментария *', class: 'control-label' %>
+          <%= f.text_area :text, class: 'form-control' %>
+        </div>
+
+        <%= f.submit nil, class: 'btn btn-primary' %>
       <% end %>
     </div>
+  </div>
+  <div class="col-xs-6 col-md-6">
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?113"></script>
 
-    <hr>
-    <hr>
-  <% end %>
+    <script type="text/javascript">
+      VK.init({apiId: <%= ENV['VK_APP_ID'] %>, onlyWidgets: true});
+    </script>
 
-  <%= form_for [@news, Comment.new] do |f| %>
-    <h2>Добавить комментарий</h2>
-
-    <div class="form-group">
-      <%= f.label :email, 'Email (опционально)', class: 'control-label' %>
-      <%= f.text_field :email, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :author, 'Автор (опционально)', class: 'control-label' %>
-      <%= f.text_field :author, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :text, 'Текст комментария *', class: 'control-label' %>
-      <%= f.text_area :text, class: 'form-control' %>
-    </div>
-
-    <%= f.submit nil, class: 'btn btn-primary' %>
-  <% end %>
+    <div id="vk_comments"></div>
+    <script type="text/javascript">
+      VK.Widgets.Comments("vk_comments", {limit: 15, width: "570", attach: "*"});
+    </script>
+  </div>
 </div>
-
-
